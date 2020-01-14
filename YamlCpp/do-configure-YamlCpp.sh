@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE_PATH=../msgpack-c
+SOURCE_PATH=../yaml-cpp
 
 # You can invoke this shell script with additional command-line
 # arguments.  They will be passed directly to CMake.
@@ -22,18 +22,12 @@ rm -f CMakeCache.txt
 # Enable all primary stable Trilinos packages.
 #
 cmake  \
-  -D CMAKE_INSTALL_PREFIX:FILEPATH="$HOME/local/" \
+  -D CMAKE_INSTALL_PREFIX:FILEPATH="$SFTPATH" \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
   -D CMAKE_CXX_COMPILER:STRING="mpicxx" \
   -D CMAKE_C_COMPILER:STRING="mpicc" \
   -D CMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
   -D CMAKE_C_FLAGS:STRING="$CFLAGS" \
-  -D BUILD_TESTING:BOOL=ON \
-  -D MSGPACK_32BIT:BOOL=OFF \
-  -D MSGPACK_BOOST:BOOL=OFF \
-  -D MSGPACK_BUILD_EXAMPLES:BOOL=OFF \
-  -D MSGPACK_BUILD_TESTS:BOOL=OFF \
-  -D MSGPACK_CXX11:BOOL=ON \
-  -D MSGPACK_CXX17:BOOL=OFF \
+  -D YAML_CPP_BUILD_TESTS:BOOL=OFF \
 $EXTRA_ARGS \
 $SOURCE_PATH

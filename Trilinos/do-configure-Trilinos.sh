@@ -24,7 +24,7 @@ rm -f CMakeCache.txt
 # Enable all primary stable Trilinos packages.
 #
 cmake  \
-  -D CMAKE_INSTALL_PREFIX:FILEPATH="$HOME/local/" \
+  -D CMAKE_INSTALL_PREFIX:FILEPATH="$SFTPATH" \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
   -D BUILD_SHARED_LIBS=OFF \
   -D Trilinos_HIDE_DEPRECATED_CODE=ON \
