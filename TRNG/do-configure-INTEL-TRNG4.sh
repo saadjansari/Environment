@@ -1,0 +1,21 @@
+#!/bin/bash
+
+SOURCE_PATH=../trng4
+
+EXTRA_ARGS=$@
+
+rm -f CMakeCache.txt
+
+cmake  \
+  -D Boost_NO_BOOST_CMAKE=ON \
+  -D Boost_NO_SYSTEM_PATHS=ON \
+  -D MPI_FOUND=OFF \
+  -D CMAKE_INSTALL_LIBDIR=lib \
+  -D CMAKE_INSTALL_PREFIX:FILEPATH="$HOME/local/" \
+  -D CMAKE_BUILD_TYPE:STRING="Release" \
+  -D CMAKE_CXX_COMPILER:STRING="icpc" \
+  -D CMAKE_C_COMPILER:STRING="icc" \
+  -D CMAKE_CXX_FLAGS:STRING="-O3 -march=native -DNDEBUG" \
+  -D CMAKE_C_FLAGS:STRING="-O3 -march=native -DNDEBUG" \
+$EXTRA_ARGS \
+$SOURCE_PATH
