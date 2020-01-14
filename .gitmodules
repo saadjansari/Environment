@@ -1,0 +1,18 @@
+[submodule "Eigen/eigen"]
+	path = Eigen/eigen
+	url = https://gitlab.com/libeigen/eigen.git
+[submodule "MsgPack/msgpack-c"]
+	path = MsgPack/msgpack-c
+	url = https://github.com/msgpack/msgpack-c.git
+[submodule "PVFMM/pvfmm"]
+	path = PVFMM/pvfmm
+	url = https://github.com/wenyan4work/pvfmm.git
+[submodule "Trilinos/Trilinos"]
+	path = Trilinos/Trilinos
+	url = https://github.com/trilinos/Trilinos.git
+[submodule "YamlCpp/yaml-cpp"]
+	path = YamlCpp/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "TRNG/trng4"]
+	path = TRNG/trng4
+	url = https://github.com/rabauke/trng4.git
