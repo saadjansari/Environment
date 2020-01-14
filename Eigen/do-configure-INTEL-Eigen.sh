@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE_PATH=../eigen-git-mirror
+SOURCE_PATH=../eigen
 
 # You can invoke this shell script with additional command-line
 # arguments.  They will be passed directly to CMake.
@@ -22,7 +22,7 @@ rm -f CMakeCache.txt
 # Enable all primary stable Trilinos packages.
 #
 cmake  \
-  -D CMAKE_INSTALL_PREFIX:FILEPATH="/home/wyan/local/" \
+  -D CMAKE_INSTALL_PREFIX:FILEPATH="$HOME/local/" \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
   -D Boost_NO_BOOST_CMAKE:BOOL=ON \
   -D MKL_INCLUDE_DIRS:FILEPATH="$MKLROOT/include" \
@@ -34,10 +34,10 @@ cmake  \
   -D LAPACK_LIBRARY_NAMES:STRING="mkl_rt" \
   -D CMAKE_CXX_COMPILER:STRING="mpicxx" \
   -D CMAKE_C_COMPILER:STRING="mpicc" \
-  -D CMAKE_CXX_FLAGS:STRING="-O3 -xHost" \
-  -D CMAKE_C_FLAGS:STRING="-O3 -xHost" \
-  -D OpenMP_CXX_FLAGS:STRING="-qopenmp" \
-  -D OpenMP_C_FLAGS:STRING="-qopenmp" \
+  -D CMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
+  -D CMAKE_C_FLAGS:STRING="$CFLAGS" \
+  -D OpenMP_CXX_FLAGS:STRING="$OPENMP_CXX_FLAGS" \
+  -D OpenMP_C_FLAGS:STRING="$OPENMP_C_FLAGS" \
   -D EIGEN_MAX_CPP_VER:STRING="14" \
   -D EIGEN_TEST_AVX:BOOL=ON \
   -D EIGEN_TEST_CXX11:BOOL=ON \

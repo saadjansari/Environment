@@ -22,12 +22,12 @@ rm -f CMakeCache.txt
 # Enable all primary stable Trilinos packages.
 #
 cmake  \
-  -D CMAKE_INSTALL_PREFIX:FILEPATH="/home/wyan/local/" \
+  -D CMAKE_INSTALL_PREFIX:FILEPATH="$HOME/local/" \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
   -D CMAKE_CXX_COMPILER:STRING="mpicxx" \
   -D CMAKE_C_COMPILER:STRING="mpicc" \
-  -D CMAKE_CXX_FLAGS:STRING="-O3 -march=native" \
-  -D CMAKE_C_FLAGS:STRING="-O3 -march=native" \
+  -D CMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
+  -D CMAKE_C_FLAGS:STRING="$CFLAGS" \
   -D BUILD_TESTING:BOOL=ON \
   -D MSGPACK_32BIT:BOOL=OFF \
   -D MSGPACK_BOOST:BOOL=OFF \
