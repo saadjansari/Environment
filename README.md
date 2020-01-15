@@ -10,3 +10,4 @@ Easy steps:
 Dependency:
 - `gcc>=7` for full `c++14` support
 - `mpicxx` and `mpicc`
+- `mkl`
