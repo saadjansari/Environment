@@ -7,6 +7,7 @@
 [submodule "PVFMM/pvfmm"]
 	path = PVFMM/pvfmm
 	url = https://github.com/wenyan4work/pvfmm.git
+	ignore = dirty
 [submodule "Trilinos/Trilinos"]
 	path = Trilinos/Trilinos
 	url = https://github.com/trilinos/Trilinos.git
