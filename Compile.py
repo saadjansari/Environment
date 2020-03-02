@@ -2,21 +2,22 @@ import os
 import multiprocessing
 
 # sets environment variables
+# installation destination
 os.environ["SFTPATH"] = os.environ["HOME"]+"/local"
-print("install destination:", os.environ["SFTPATH"])
+
 # intel compiler
-# os.environ["CXXFLAGS"] = "-O3 -xHost -DNDEBUG -qno-offload"
-# os.environ["CFLAGS"] = "-O3 -xHost -DNDEBUG -qno-offload"
-# os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
-# os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
+os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
+os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
+os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
+os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
 
 # gcc
-os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
-os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
-os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
-os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
+# os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
+# os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
+# os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
+# os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
 
-install = False
+install = True
 check_eigen = False
 test_Trilinos = True
 make_jobs = multiprocessing.cpu_count()
@@ -24,6 +25,7 @@ make_jobs = multiprocessing.cpu_count()
 
 cwd = os.getcwd()
 
+print("install destination:", os.environ["SFTPATH"])
 os.system('git submodule init')
 os.system('git submodule update')
 
@@ -74,16 +76,17 @@ os.system('rm -rf ./build && mkdir ./build')
 os.chdir('build')
 os.system('bash ../do-configure-Trilinos.sh && make -j'+str(make_jobs))
 if test_Trilinos:
-    os.environ["OMP_NUM_THREADS"] = "4"
+    os.environ["OMP_NUM_THREADS"] = "3"
     os.system('make test')
 if install:
     os.system('make install')
 
-# PVFMM, does not work yet
-# os.chdir(cwd)
-# os.chdir('PVFMM/pvfmm')
-# os.system('./autogen.sh')
-# os.system('bash ../do-configure.sh && make clean')
-# os.system('make -j8')
-# if install:
-#     os.system('make install')
+# PVFMM
+os.chdir(cwd)
+os.chdir('PVFMM')
+os.system('rm -rf ./build && mkdir ./build')
+os.chdir('build')
+os.system('bash ../do-configure-pvfmm.sh && make -j'+str(make_jobs))
+os.system('./examples/example1 -N 65536 -omp 4')
+if install:
+    os.system('make install')
