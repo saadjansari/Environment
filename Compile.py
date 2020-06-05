@@ -6,16 +6,16 @@ import multiprocessing
 os.environ["SFTPATH"] = os.environ["HOME"]+"/local"
 
 # intel compiler
-os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
-os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
+#os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
+#os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
+#os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
+#os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
 
 # gcc
-# os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
-# os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
-# os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
-# os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
+os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
+os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
+os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
+os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
 
 install = True
 check_eigen = False
