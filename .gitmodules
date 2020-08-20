@@ -17,3 +17,6 @@
 [submodule "TRNG/trng4"]
 	path = TRNG/trng4
 	url = https://github.com/rabauke/trng4.git
+[submodule "VTK/VTK"]
+	path = VTK/VTK
+	url = https://gitlab.kitware.com/vtk/vtk.git
