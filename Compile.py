@@ -17,15 +17,18 @@ os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
 os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
 os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
 
+msg = "Remember to set environment variables MKL_INCLUDE_DIRS and MKL_LIB_DIRS to correct path before running this script.\n"
+print(msg)
+
 # comment out component you don't want
 enable = [
-    'trng',
-    'eigen',
-    'msgpack',
-    'yamlcpp',
-    'trilinos',
+#    'trng',
+#    'eigen',
+#    'msgpack',
+#    'yamlcpp',
+#    'trilinos',
     'pvfmm',
-    'vtk'
+#    'vtk'
 ]
 
 install = True
