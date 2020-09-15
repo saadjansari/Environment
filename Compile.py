@@ -6,29 +6,29 @@ import multiprocessing
 os.environ["SFTPATH"] = os.environ["HOME"]+"/local"
 
 # intel compiler
-#os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-#os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-#os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
-#os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
+os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
+os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
+os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
+os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
 
 # gcc
-os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
-os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
-os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
-os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
+#os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
+#os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
+#os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
+#os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
 
 msg = "Remember to set environment variables MKL_INCLUDE_DIRS and MKL_LIB_DIRS to correct path before running this script.\n"
 print(msg)
 
 # comment out component you don't want
 enable = [
-#    'trng',
-#    'eigen',
-#    'msgpack',
-#    'yamlcpp',
-#    'trilinos',
+    'trng',
+    'eigen',
+    'msgpack',
+    'yamlcpp',
+    'trilinos',
     'pvfmm',
-#    'vtk'
+    'vtk'
 ]
 
 install = True
