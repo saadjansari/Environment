@@ -30,8 +30,9 @@ cmake  \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
   -D CMAKE_CXX_COMPILER:STRING="mpicxx" \
   -D CMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
-  -D BLA_STATIC:BOOL=ON \
   -D BLA_VENDOR="FLAME" \
+  -D BLAS_LIBRARIES:FILEPATH="$AOCL_BASE/lib/libblis-mt.a" \
+  -D LAPACK_LIBRARIES:FILEPATH="$AOCL_BASE/lib/libflame.a" \
   -D FFTW_INCLUDE_DIRS:FILEPATH="$AOCL_BASE/amd-fftw/include" \
   -D FFTW_DOUBLE_LIB="$AOCL_BASE/lib/libfftw3.so" \
   -D FFTW_DOUBLE_OPENMP_LIB="$AOCL_BASE/lib/libfftw3_omp.so" \
@@ -40,8 +41,4 @@ cmake  \
 $EXTRA_ARGS \
 $SOURCE_PATH
 
-# FFTW_FLOAT_LIB                   /cm/shared/sw/pkg/devel/amd/aocl/2.1/amd-fftw/lib/libfftw3f.so
-# FFTW_FLOAT_OPENMP_LIB            /cm/shared/sw/pkg/devel/amd/aocl/2.1/amd-fftw/lib/libfftw3f_omp.so
-# FFTW_LONGDOUBLE_LIB              /cm/shared/sw/pkg/devel/amd/aocl/2.1/amd-fftw/lib/libfftw3l.so
-# FFTW_LONGDOUBLE_OPENMP_LIB       /cm/shared/sw/pkg/devel/amd/aocl/2.1/amd-fftw/lib/libfftw3l_omp.so.3
-# /cm/shared/sw/pkg/devel/amd/aocl/2.1/libs/libamdlibm.so
+#  -D BLA_STATIC:BOOL=ON \

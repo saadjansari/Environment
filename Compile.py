@@ -11,16 +11,16 @@ os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
 
 # comment out component you don't want
 enable = [
-#    'trng',
-#    'eigen',
-#    'msgpack',
-#    'yamlcpp',
+    'trng',
+    'eigen',
+    'msgpack',
+    'yamlcpp',
     'trilinos',
-#    'pvfmm',
-#    'vtk'
+    'pvfmm',
+    'vtk'
 ]
 
-install = False
+install = True
 check_eigen = False
 test_Trilinos = True
 make_jobs = multiprocessing.cpu_count()
@@ -96,7 +96,7 @@ if 'pvfmm' in enable:
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
     os.system('bash ../do-configure-pvfmm.sh && make -j'+str(make_jobs))
-    os.system('./examples/example1 -N 65536 -omp 4')
+    os.system('mpirun -n 1 ./examples/example1 -N 65536 -omp 4')
     if install:
         os.system('make install')
 
