@@ -3,22 +3,13 @@ import multiprocessing
 
 # sets environment variables
 # installation destination
-os.environ["SFTPATH"] = os.environ["HOME"]+"/local"
-
-# intel compiler
-os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
-os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
+os.environ["SFTPATH"] = os.environ["HOME"]+"/env_amd"
 
 # gcc
-#os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
-#os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
-#os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
-#os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
-
-msg = "Remember to set environment variables MKL_INCLUDE_DIRS and MKL_LIB_DIRS to correct path before running this script.\n"
-print(msg)
+os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
+os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
+os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
+os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
 
 # comment out component you don't want
 enable = [
@@ -26,12 +17,12 @@ enable = [
     'eigen',
     'msgpack',
     'yamlcpp',
-    'trilinos',
-    'pvfmm',
+#    'trilinos',
+#    'pvfmm',
     'vtk'
 ]
 
-install = True
+install = False
 check_eigen = False
 test_Trilinos = True
 make_jobs = multiprocessing.cpu_count()
