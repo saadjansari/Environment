@@ -7,6 +7,10 @@ SOURCE_PATH=../pvfmm
 #
 EXTRA_ARGS=$@
 
+# use aocl library
+#export FFTWDIR=$AOCL_BASE/amd-fftw/ 
+export FFTWDIR=$AOCL_BASE/
+
 #
 # Each invocation of CMake caches the values of build options in a
 # CMakeCache.txt file.  If you run CMake again without deleting the
@@ -26,8 +30,18 @@ cmake  \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
   -D CMAKE_CXX_COMPILER:STRING="mpicxx" \
   -D CMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
-  -D MKL_INCLUDE_DIR:FILEPATH="$MKL_INCLUDE_DIRS" \
-  -D MKL_FFTW_INCLUDE_DIR:FILEPATH="$MKL_INCLUDE_DIRS/fftw" \
-  -D MKL_SDL_LIBRARY:STRING="$MKL_LIB_DIRS/libmkl_rt.so" \
+  -D BLA_STATIC:BOOL=ON \
+  -D BLA_VENDOR="FLAME" \
+  -D FFTW_INCLUDE_DIRS:FILEPATH="$AOCL_BASE/amd-fftw/include" \
+  -D FFTW_DOUBLE_LIB="$AOCL_BASE/lib/libfftw3.so" \
+  -D FFTW_DOUBLE_OPENMP_LIB="$AOCL_BASE/lib/libfftw3_omp.so" \
+  -D FFTW_FLOAT_LIB="$AOCL_BASE/lib/libfftw3f.so" \
+  -D FFTW_FLOAT_OPENMP_LIB="$AOCL_BASE/lib/libfftw3f_omp.so" \
 $EXTRA_ARGS \
 $SOURCE_PATH
+
+# FFTW_FLOAT_LIB                   /cm/shared/sw/pkg/devel/amd/aocl/2.1/amd-fftw/lib/libfftw3f.so
+# FFTW_FLOAT_OPENMP_LIB            /cm/shared/sw/pkg/devel/amd/aocl/2.1/amd-fftw/lib/libfftw3f_omp.so
+# FFTW_LONGDOUBLE_LIB              /cm/shared/sw/pkg/devel/amd/aocl/2.1/amd-fftw/lib/libfftw3l.so
+# FFTW_LONGDOUBLE_OPENMP_LIB       /cm/shared/sw/pkg/devel/amd/aocl/2.1/amd-fftw/lib/libfftw3l_omp.so.3
+# /cm/shared/sw/pkg/devel/amd/aocl/2.1/libs/libamdlibm.so

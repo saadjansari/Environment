@@ -13,13 +13,13 @@ os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
 
 # comment out component you don't want
 enable = [
-    'trng',
-    'eigen',
-    'msgpack',
-    'yamlcpp',
+#    'trng',
+#    'eigen',
+#    'msgpack',
+#    'yamlcpp',
 #    'trilinos',
-#    'pvfmm',
-    'vtk'
+    'pvfmm',
+#    'vtk'
 ]
 
 install = False
