@@ -8,8 +8,6 @@ os.environ["SFTPATH"] = os.environ["HOME"]+"/env_amd"
 # gcc
 os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
 os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
-os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
-os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
 
 # comment out component you don't want
 enable = [
@@ -17,8 +15,8 @@ enable = [
 #    'eigen',
 #    'msgpack',
 #    'yamlcpp',
-#    'trilinos',
-    'pvfmm',
+    'trilinos',
+#    'pvfmm',
 #    'vtk'
 ]
 
