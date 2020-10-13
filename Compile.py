@@ -6,8 +6,8 @@ import multiprocessing
 os.environ["SFTPATH"] = os.environ["HOME"]+"/env_amd"
 
 # gcc
-os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
-os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
+os.environ["CXXFLAGS"] = "-O3 -march=znver2 -DNDEBUG"
+os.environ["CFLAGS"] = "-O3 -march=znver2 -DNDEBUG"
 
 # comment out component you don't want
 enable = [
@@ -20,7 +20,7 @@ enable = [
     'vtk'
 ]
 
-install = True
+install = False
 check_eigen = False
 test_Trilinos = True
 make_jobs = multiprocessing.cpu_count()

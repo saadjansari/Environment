@@ -43,13 +43,12 @@ cmake  \
   -D Trilinos_ENABLE_Ifpack2:BOOL=ON \
   -D Trilinos_ENABLE_Zoltan2:BOOL=ON \
   -D Trilinos_ENABLE_TESTS:BOOL=ON \
-  -D TpetraCore_Threaded_MKL:BOOL=ON \
   -D TPL_ENABLE_HWLOC:BOOL=OFF \
   -D TPL_ENABLE_MPI:BOOL=ON \
   -D BLA_STATIC:BOOL=ON \
-  -D BLA_VENDOR:STRING="FLAME" \
-  -D TPL_BLAS_LIBRARIES:PATH="$AOCL_BASE/lib/libblis-mt.a" \
-  -D TPL_LAPACK_LIBRARIES:PATH="$AOCL_BASE/lib/libflame.a" \
+  -D BLA_VENDOR:STRING="OpenBLAS" \
+  -D TPL_BLAS_LIBRARIES:PATH="$HOME/amd/lib/libopenblas.so" \
+  -D TPL_LAPACK_LIBRARIES:PATH="$HOME/amd/lib/libopenblas.so" \
 $EXTRA_ARGS \
 $TRILINOS_PATH
 
