@@ -8,7 +8,6 @@ SOURCE_PATH=../pvfmm
 EXTRA_ARGS=$@
 
 # use aocl library
-#export FFTWDIR=$AOCL_BASE/amd-fftw/ 
 export FFTWDIR=$AOCL_BASE/
 
 #
@@ -30,9 +29,9 @@ cmake  \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
   -D CMAKE_CXX_COMPILER:STRING="mpicxx" \
   -D CMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
-  -D BLA_VENDOR="FLAME" \
-  -D BLAS_LIBRARIES:FILEPATH="$AOCL_BASE/lib/libblis-mt.a" \
-  -D LAPACK_LIBRARIES:FILEPATH="$AOCL_BASE/lib/libflame.a" \
+  -D BLA_VENDOR="OpenBLAS" \
+  -D BLAS_LIBRARIES:FILEPATH="$HOME/amd/lib/libopenblas.so" \
+  -D LAPACK_LIBRARIES:FILEPATH="$HOME/amd/lib/libopenblas.so" \
   -D FFTW_INCLUDE_DIRS:FILEPATH="$AOCL_BASE/amd-fftw/include" \
   -D FFTW_DOUBLE_LIB="$AOCL_BASE/lib/libfftw3.so" \
   -D FFTW_DOUBLE_OPENMP_LIB="$AOCL_BASE/lib/libfftw3_omp.so" \
