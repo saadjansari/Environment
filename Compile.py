@@ -25,7 +25,7 @@ if args.cc == 'icc':
     os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
     os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
 elif args.cc == 'aocc':
-    # TODO:
+    # TODO
     pass
 elif args.cc == 'gcc':
     os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
@@ -39,11 +39,21 @@ print(os.environ["CFLAGS"])
 print(os.environ["OPENMP_CXX_FLAGS"])
 print(os.environ["OPENMP_C_FLAGS"])
 
-
-exit()
-
-msg = "Remember to set environment variables MKL_INCLUDE_DIRS and MKL_LIB_DIRS to correct path before running this script.\n"
-print(msg)
+if args.lib == 'mkl':
+    if 'MKLROOT' in os.environ:
+        os.environ['MKL_INCLUDE_DIRS'] = os.environ['MKLROOT']+'/include'
+        os.environ['MKL_LIB_DIRS'] = os.environ['MKLROOT']+'/lib/intel64'
+    elif os.environ['MKL_INCLUDE_DIRS'] and os.environ['MKL_LIB_DIRS']:
+        pass
+    else:
+        msg = "Remember to set environment variables MKL_INCLUDE_DIRS/MKL_LIB_DIRS or MKLROOT to correct path before running this script.\n"
+        print(msg)
+        exit()
+    print(os.environ["MKL_INCLUDE_DIRS"])
+    print(os.environ["MKL_LIB_DIRS"])
+elif args.lib == 'aocl':
+    # TODO
+    pass
 
 # comment out component you don't want
 enable = [
