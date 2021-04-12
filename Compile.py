@@ -1,34 +1,59 @@
 import os
 import multiprocessing
+import argparse
+
+parser = argparse.ArgumentParser(description='choose compiler and libraries.')
+parser.add_argument('--cc', dest='cc', type=str, default='gcc',
+                    help='choose the compiler between gcc, icc, or aocc (default: gcc)')
+parser.add_argument('--lib', dest='lib', type=str, default='mkl',
+                    help='choose the lib between mkl or aocl (default: mkl)')
+parser.add_argument('--prefix', dest='prefix', type=str,
+                    help='installation destination, default="$HOME/local"')
+
+args = parser.parse_args()
 
 # sets environment variables
 # installation destination
-os.environ["SFTPATH"] = os.environ["HOME"]+"/local"
+if args.prefix:
+    os.environ["SFTPATH"] = args.prefix+'/'
+else:
+    os.environ["SFTPATH"] = os.environ["HOME"]+'/local/'
 
-# intel compiler
-#os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-#os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-#os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
-#os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
+if args.cc == 'icc':
+    os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
+    os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
+    os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
+    os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
+elif args.cc == 'aocc':
+    # TODO:
+    pass
+elif args.cc == 'gcc':
+    os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
+    os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
+    os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
+    os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
 
-# gcc
-os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
-os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
-os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
-os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
+print(os.environ["SFTPATH"])
+print(os.environ["CXXFLAGS"])
+print(os.environ["CFLAGS"])
+print(os.environ["OPENMP_CXX_FLAGS"])
+print(os.environ["OPENMP_C_FLAGS"])
+
+
+exit()
 
 msg = "Remember to set environment variables MKL_INCLUDE_DIRS and MKL_LIB_DIRS to correct path before running this script.\n"
 print(msg)
 
 # comment out component you don't want
 enable = [
-    'trng',
-    'eigen',
-    'msgpack',
-    'yamlcpp',
-    #    'trilinos',
+    # 'trng',
+    # 'eigen',
+    # 'msgpack',
+    # 'yamlcpp',
+    'trilinos',
     #    'pvfmm',
-    'vtk'
+    # 'vtk'
 ]
 
 install = True
