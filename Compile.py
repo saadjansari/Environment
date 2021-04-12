@@ -22,13 +22,13 @@ print(msg)
 
 # comment out component you don't want
 enable = [
-#    'trng',
-#    'eigen',
-#    'msgpack',
-#    'yamlcpp',
-#    'trilinos',
-    'pvfmm',
-#    'vtk'
+    'trng',
+    'eigen',
+    'msgpack',
+    'yamlcpp',
+    #    'trilinos',
+    #    'pvfmm',
+    'vtk'
 ]
 
 install = True
