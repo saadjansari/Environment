@@ -4,9 +4,10 @@ import argparse
 import yaml
 
 
-with open('config.yaml') as f:
-    data = yaml.load(f, Loader=yaml.FullLoader)
-    print(data)
+f=open('config.yaml')
+data = yaml.load(f, Loader=yaml.FullLoader)
+f.close()
+print(data)
 
 
 exit()
