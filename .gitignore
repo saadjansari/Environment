@@ -1,3 +1,5 @@
+config.yaml
+
 # Prerequisites
 *.d
 
@@ -34,3 +36,4 @@
 # build
 */build/
 .vscode/
+.vscode/**

@@ -1,0 +1,36 @@
+# copy this and rename to config.yaml
+
+# choose packages to enable
+trng: True
+eigen: True
+msgpack: True
+yamlcpp: True
+trilinos: True
+pvfmm: True
+vtk: True
+
+install_destination: $HOME/local
+
+# gcc flags
+cxxflags: -O3 -march=native -DNDEBUG 
+cflags: -O3 -march=native -DNDEBUG 
+openmp_cxx_flags: -fopenmp
+openmp_c_flags: -fopenmp
+
+# icc flags
+# cxxflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
+# cflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
+# openmp_cxx_flags: -qopenmp
+# openmp_c_flags: -qopenmp
+
+# gcc on amd:
+# cxxflags: -O3 -march=znver2 -DNDEBUG 
+# cflags: -O3 -march=znvre2 -DNDEBUG 
+# openmp_cxx_flags: -fopenmp
+# openmp_c_flags: -fopenmp
+
+
+# if empty, will try to read from environment variables
+mkl_root:
+mkl_include_dirs:
+mkl_lib_dirs:

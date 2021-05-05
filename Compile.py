@@ -1,14 +1,17 @@
 import os
 import multiprocessing
 import argparse
+import yaml
+
+
+with open('config.yaml') as f:
+    data = yaml.load(f, Loader=yaml.FullLoader)
+    print(data)
+
+
+exit()
 
 parser = argparse.ArgumentParser(description='choose compiler and libraries.')
-parser.add_argument('--cc', dest='cc', type=str, default='gcc',
-                    help='choose the compiler between gcc, icc, or aocc (default: gcc)')
-parser.add_argument('--lib', dest='lib', type=str, default='mkl',
-                    help='choose the lib between mkl or aocl (default: mkl)')
-parser.add_argument('--prefix', dest='prefix', type=str,
-                    help='installation destination, default="$HOME/local"')
 
 args = parser.parse_args()
 
