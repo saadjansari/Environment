@@ -23,14 +23,11 @@ openmp_c_flags: -fopenmp
 # openmp_cxx_flags: -qopenmp
 # openmp_c_flags: -qopenmp
 
-# gcc on amd:
-# cxxflags: -O3 -march=znver2 -DNDEBUG 
-# cflags: -O3 -march=znvre2 -DNDEBUG 
-# openmp_cxx_flags: -fopenmp
-# openmp_c_flags: -fopenmp
-
-
-# if empty, will try to read from environment variables
-mkl_root:
+mkl_root: $MKLROOT
 mkl_include_dirs:
 mkl_lib_dirs:
+
+install: True
+check_eigen: False
+test_Trilinos: True
+make_jobs: 4

@@ -4,86 +4,56 @@ import argparse
 import yaml
 
 
-f=open('config.yaml')
-data = yaml.load(f, Loader=yaml.FullLoader)
+f = open('config.yaml')
+config = yaml.load(f, Loader=yaml.FullLoader)
 f.close()
-print(data)
+print(config)
 
-
-exit()
-
-parser = argparse.ArgumentParser(description='choose compiler and libraries.')
-
-args = parser.parse_args()
 
 # sets environment variables
 # installation destination
-if args.prefix:
-    os.environ["SFTPATH"] = args.prefix+'/'
-else:
-    os.environ["SFTPATH"] = os.environ["HOME"]+'/local/'
+os.environ["SFTPATH"] = config['install_destination']
+os.environ["CXXFLAGS"] = config['cxxflags']
+os.environ["CFLAGS"] = config['cflags']
+os.environ["OPENMP_CXX_FLAGS"] = config['openmp_cxx_flags']
+os.environ["OPENMP_C_FLAGS"] = config['openmp_c_flags']
 
-if args.cc == 'icc':
-    os.environ["CXXFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-    os.environ["CFLAGS"] = "-O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload"
-    os.environ["OPENMP_CXX_FLAGS"] = "-qopenmp"
-    os.environ["OPENMP_C_FLAGS"] = "-qopenmp"
-elif args.cc == 'aocc':
-    # TODO
-    pass
-elif args.cc == 'gcc':
-    os.environ["CXXFLAGS"] = "-O3 -march=native -DNDEBUG"
-    os.environ["CFLAGS"] = "-O3 -march=native -DNDEBUG"
-    os.environ["OPENMP_CXX_FLAGS"] = "-fopenmp"
-    os.environ["OPENMP_C_FLAGS"] = "-fopenmp"
-
-print(os.environ["SFTPATH"])
+print("install destination:", os.environ["SFTPATH"])
 print(os.environ["CXXFLAGS"])
 print(os.environ["CFLAGS"])
 print(os.environ["OPENMP_CXX_FLAGS"])
 print(os.environ["OPENMP_C_FLAGS"])
 
-if args.lib == 'mkl':
-    if 'MKLROOT' in os.environ:
-        os.environ['MKL_INCLUDE_DIRS'] = os.environ['MKLROOT']+'/include'
-        os.environ['MKL_LIB_DIRS'] = os.environ['MKLROOT']+'/lib/intel64'
-    elif os.environ['MKL_INCLUDE_DIRS'] and os.environ['MKL_LIB_DIRS']:
-        pass
-    else:
-        msg = "Remember to set environment variables MKL_INCLUDE_DIRS/MKL_LIB_DIRS or MKLROOT to correct path before running this script.\n"
-        print(msg)
-        exit()
-    print(os.environ["MKL_INCLUDE_DIRS"])
-    print(os.environ["MKL_LIB_DIRS"])
-elif args.lib == 'aocl':
-    # TODO
-    pass
+if 'MKLROOT' in os.environ:
+    os.environ['MKL_INCLUDE_DIRS'] = os.environ['MKLROOT']+'/include'
+    os.environ['MKL_LIB_DIRS'] = os.environ['MKLROOT']+'/lib/intel64'
+elif config['mkl_root']:
+    os.environ['MKLROOT'] = config['mkl_root']
+    os.environ['MKL_INCLUDE_DIRS'] = os.environ['MKLROOT']+'/include'
+    os.environ['MKL_LIB_DIRS'] = os.environ['MKLROOT']+'/lib/intel64'
+elif config['mkl_include_dirs'] and config['mkl_lib_dirs']:
+    os.environ['MKL_INCLUDE_DIRS'] = config['mkl_include_dirs']
+    os.environ['MKL_LIB_DIRS'] = config['mkl_lib_dirs']
+else:
+    msg = "must set either MKL_INCLUDE_DIRS/MKL_LIB_DIRS or MKLROOT in config.yaml\n"
+    print(msg)
+    exit()
 
-# comment out component you don't want
-enable = [
-    # 'trng',
-    # 'eigen',
-    # 'msgpack',
-    # 'yamlcpp',
-    'trilinos',
-    #    'pvfmm',
-    # 'vtk'
-]
+print(os.environ["MKL_INCLUDE_DIRS"])
+print(os.environ["MKL_LIB_DIRS"])
 
-install = True
-check_eigen = False
-test_Trilinos = True
-make_jobs = multiprocessing.cpu_count()
+install = config['install']
+check_eigen = config['check_eigen']
+test_Trilinos = config['test_Trilinos']
+make_jobs = multiprocessing.cpu_count()/2
+if config['make_jobs']:
+    make_jobs = config['make_jobs']
 
 
 cwd = os.getcwd()
 
-print("install destination:", os.environ["SFTPATH"])
-os.system('git submodule init')
-os.system('git submodule update')
-
 # TRNG
-if 'trng' in enable:
+if config['trng']:
     os.chdir(cwd)
     os.chdir('TRNG')
     os.system('rm -rf ./build && mkdir ./build')
@@ -94,7 +64,7 @@ if 'trng' in enable:
         os.system('make install')
 
 # YamlCpp
-if 'yamlcpp' in enable:
+if config['yamlcpp']:
     os.chdir(cwd)
     os.chdir('YamlCpp')
     os.system('rm -rf ./build && mkdir ./build')
@@ -104,7 +74,7 @@ if 'yamlcpp' in enable:
         os.system('make install')
 
 # MsgPack
-if 'msgpack' in enable:
+if config['msgpack']:
     os.chdir(cwd)
     os.chdir('MsgPack')
     os.system('rm -rf ./build && mkdir ./build')
@@ -114,7 +84,7 @@ if 'msgpack' in enable:
         os.system('make install')
 
 # Eigen
-if 'eigen' in enable:
+if config['eigen']:
     os.chdir(cwd)
     os.chdir('Eigen')
     os.system('rm -rf ./build && mkdir ./build')
@@ -127,7 +97,7 @@ if 'eigen' in enable:
 
 
 # Trilinos
-if 'trilinos' in enable:
+if config['trilinos']:
     os.chdir(cwd)
     os.chdir('Trilinos')
     os.system('rm -rf ./build && mkdir ./build')
@@ -140,7 +110,7 @@ if 'trilinos' in enable:
         os.system('make install')
 
 # PVFMM
-if 'pvfmm' in enable:
+if config['pvfmm']:
     os.chdir(cwd)
     os.chdir('PVFMM')
     os.system('rm -rf ./build && mkdir ./build')
@@ -151,7 +121,7 @@ if 'pvfmm' in enable:
         os.system('make install')
 
 # VTK
-if 'vtk' in enable:
+if config['vtk']:
     os.chdir(cwd)
     os.chdir('VTK')
     os.system('rm -rf ./build && mkdir ./build')
