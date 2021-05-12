@@ -1,6 +1,5 @@
 import os
 import multiprocessing
-import argparse
 import yaml
 
 
@@ -39,15 +38,18 @@ else:
     print(msg)
     exit()
 
-print(os.environ["MKL_INCLUDE_DIRS"])
-print(os.environ["MKL_LIB_DIRS"])
+os.system('env | grep MKL')
 
 install = config['install']
-check_eigen = config['check_eigen']
+check_eigen = False
 test_Trilinos = config['test_Trilinos']
 make_jobs = multiprocessing.cpu_count()/2
 if config['make_jobs']:
     make_jobs = config['make_jobs']
+
+
+if input("Press Y to continue, else to quit...  ") != 'y':
+    exit()
 
 
 cwd = os.getcwd()
@@ -96,16 +98,13 @@ if config['eigen']:
         os.system('make install')
 
 
-# Trilinos
-if config['trilinos']:
+# VTK
+if config['vtk']:
     os.chdir(cwd)
-    os.chdir('Trilinos')
+    os.chdir('VTK')
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
-    os.system('bash ../do-configure-Trilinos.sh && make -j'+str(make_jobs))
-    if test_Trilinos:
-        os.environ["OMP_NUM_THREADS"] = "3"
-        os.system('make test')
+    os.system('bash ../do-configure-VTK.sh && make -j'+str(make_jobs))
     if install:
         os.system('make install')
 
@@ -120,12 +119,15 @@ if config['pvfmm']:
     if install:
         os.system('make install')
 
-# VTK
-if config['vtk']:
+# Trilinos
+if config['trilinos']:
     os.chdir(cwd)
-    os.chdir('VTK')
+    os.chdir('Trilinos')
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
-    os.system('bash ../do-configure-VTK.sh && make -j'+str(make_jobs))
+    os.system('bash ../do-configure-Trilinos.sh && make -j'+str(make_jobs))
+    if test_Trilinos:
+        os.environ["OMP_NUM_THREADS"] = "3"
+        os.system('make test')
     if install:
         os.system('make install')

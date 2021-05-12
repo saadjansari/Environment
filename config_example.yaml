@@ -5,29 +5,28 @@ trng: True
 eigen: True
 msgpack: True
 yamlcpp: True
-trilinos: True
 pvfmm: True
 vtk: True
+trilinos: True
 
-install_destination: $HOME/local
+install_destination: ~/env_intel
 
 # gcc flags
-cxxflags: -O3 -march=native -DNDEBUG 
-cflags: -O3 -march=native -DNDEBUG 
-openmp_cxx_flags: -fopenmp
-openmp_c_flags: -fopenmp
+# cxxflags: -O3 -march=native -DNDEBUG
+# cflags: -O3 -march=native -DNDEBUG
+# openmp_cxx_flags: -fopenmp
+# openmp_c_flags: -fopenmp
 
 # icc flags
-# cxxflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
-# cflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
-# openmp_cxx_flags: -qopenmp
-# openmp_c_flags: -qopenmp
+cxxflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
+cflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
+openmp_cxx_flags: -qopenmp
+openmp_c_flags: -qopenmp
 
-mkl_root: $MKLROOT
+mkl_root:
 mkl_include_dirs:
 mkl_lib_dirs:
 
-install: True
-check_eigen: False
+install: False
 test_Trilinos: True
-make_jobs: 4
+make_jobs: 12

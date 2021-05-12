@@ -21,7 +21,7 @@ rm -f CMakeCache.txt
 #
 # Enable all primary stable Trilinos packages.
 #
-cmake  \
+cmake \
   -D CMAKE_INSTALL_PREFIX:FILEPATH="$SFTPATH" \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
   -D CMAKE_CXX_COMPILER:STRING="mpicxx" \
@@ -32,6 +32,5 @@ cmake  \
   -D EIGEN_TEST_CXX11:BOOL=ON \
   -D EIGEN_TEST_FMA:BOOL=ON \
   -D EIGEN_TEST_OPENMP:BOOL=ON \
-$EXTRA_ARGS \
-$SOURCE_PATH
-
+  $EXTRA_ARGS \
+  $SOURCE_PATH
