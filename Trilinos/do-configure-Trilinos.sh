@@ -43,7 +43,6 @@ cmake \
 	-D Trilinos_ENABLE_Tpetra:BOOL=ON \
 	-D Trilinos_ENABLE_Belos:BOOL=ON \
 	-D Trilinos_ENABLE_Ifpack2:BOOL=ON \
-	-D Trilinos_ENABLE_ROL:BOOL=ON \
 	-D Trilinos_ENABLE_Zoltan2:BOOL=ON \
 	-D TPL_ENABLE_HWLOC:BOOL=OFF \
 	-D TPL_ENABLE_MPI:BOOL=ON \
@@ -58,4 +57,3 @@ cmake \
 	-D LAPACK_LIBRARY_NAMES:STRING="mkl_rt" \
 	$EXTRA_ARGS \
 	$TRILINOS_PATH
-
