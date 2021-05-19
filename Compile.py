@@ -53,6 +53,10 @@ if input("Press Y to continue, else to quit...  ") != 'y':
 
 
 cwd = os.getcwd()
+log = cwd+'/compile.log'
+err = cwd+'/compile.err'
+os.system('date >'+log)
+os.system('date >'+err)
 
 # TRNG
 if config['trng']:
@@ -61,7 +65,7 @@ if config['trng']:
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
     os.system('bash ../do-configure-TRNG4.sh && make -j' +
-              str(make_jobs)+' &> '+cwd+'/compile.log')
+              str(make_jobs)+' >> '+log+'  2>>'+err)
     os.system('./examples/time')
     if install:
         os.system('make install')
@@ -73,7 +77,7 @@ if config['yamlcpp']:
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
     os.system('bash ../do-configure-YamlCpp.sh && make -j' +
-              str(make_jobs)+' &> '+cwd+'/compile.log')
+              str(make_jobs)+' >> '+log+'  2>>'+err)
     if install:
         os.system('make install')
 
@@ -84,7 +88,7 @@ if config['msgpack']:
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
     os.system('bash ../do-configure-MsgPack.sh && make -j' +
-              str(make_jobs)+' &> '+cwd+'/compile.log')
+              str(make_jobs)+' >> '+log+'  2>>'+err)
     if install:
         os.system('make install')
 
@@ -95,7 +99,7 @@ if config['eigen']:
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
     os.system('bash ../do-configure-Eigen.sh && make -j' +
-              str(make_jobs)+' &> '+cwd+'/compile.log')
+              str(make_jobs)+'  >> '+log+'  2>>'+err)
     if check_eigen:
         os.system('make check -j8')
     if install:
@@ -109,7 +113,7 @@ if config['vtk']:
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
     os.system('bash ../do-configure-VTK.sh && make -j' +
-              str(make_jobs)+' &> '+cwd+'/compile.log')
+              str(make_jobs)+'  >> '+log+'  2>>'+err)
     if install:
         os.system('make install')
 
@@ -120,7 +124,7 @@ if config['pvfmm']:
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
     os.system('bash ../do-configure-pvfmm.sh && make -j' +
-              str(make_jobs)+' &> '+cwd+'/compile.log')
+              str(make_jobs)+'  >> '+log+'  2>>'+err)
     os.system('./examples/example1 -N 65536 -omp 4')
     if install:
         os.system('make install')
@@ -132,7 +136,7 @@ if config['trilinos']:
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
     os.system('bash ../do-configure-Trilinos.sh && make -j' +
-              str(make_jobs)+' &> '+cwd+'/compile.log')
+              str(make_jobs)+'  >> '+log+'  2>>'+err)
     if test_Trilinos:
         os.environ["OMP_NUM_THREADS"] = "3"
         os.system('make test')

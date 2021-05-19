@@ -1,5 +1,6 @@
 config.yaml
-compile.log
+**.log
+**.err
 
 # Prerequisites
 *.d
