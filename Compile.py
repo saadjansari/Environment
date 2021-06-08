@@ -117,12 +117,21 @@ if config['vtk']:
     if install:
         os.system('make install')
 
+# openblas for amd 
+if config['AMD']:
+    os.chdir(cwd)
+    os.chdir('openblas')
+
 # PVFMM
 if config['pvfmm']:
     os.chdir(cwd)
     os.chdir('PVFMM')
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
+    if config['AMD']:
+        cmake_script = 'PVFMM-AMD.sh'
+    else:
+        cmake_script = 'PVFMM-MKL.sh'
     os.system('bash ../do-configure-pvfmm.sh && make -j' +
               str(make_jobs)+'  >> '+log+'  2>>'+err)
     os.system('./examples/example1 -N 65536 -omp 4')
@@ -135,7 +144,11 @@ if config['trilinos']:
     os.chdir('Trilinos')
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
-    os.system('bash ../do-configure-Trilinos.sh && make -j' +
+    if config['AMD']:
+        cmake_script = 'Trilinos-AMD.sh'
+    else:
+        cmake_script = 'Trilinos-MKL.sh'
+    os.system('bash ../'+cmake_script+' && make -j' +
               str(make_jobs)+'  >> '+log+'  2>>'+err)
     if test_Trilinos:
         os.environ["OMP_NUM_THREADS"] = "3"

@@ -20,3 +20,6 @@
 [submodule "VTK/VTK"]
 	path = VTK/VTK
 	url = https://gitlab.kitware.com/vtk/vtk.git
+[submodule "OpenBLAS"]
+	path = OpenBLAS
+	url = https://github.com/xianyi/OpenBLAS.git

@@ -11,6 +11,8 @@ trilinos: True
 
 install_destination: ~/env_intel
 
+AMD: False # if true, use openblas and fftw instead of mkl
+
 # gcc flags
 # cxxflags: -O3 -march=native -DNDEBUG
 # cflags: -O3 -march=native -DNDEBUG
@@ -26,6 +28,8 @@ openmp_c_flags: -qopenmp
 mkl_root:
 mkl_include_dirs:
 mkl_lib_dirs:
+
+openblas_lib:  # full path to libopenblas.so
 
 install: False
 test_Trilinos: True
