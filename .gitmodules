@@ -6,7 +6,7 @@
 	url = https://github.com/msgpack/msgpack-c.git
 [submodule "PVFMM/pvfmm"]
 	path = PVFMM/pvfmm
-	url = https://github.com/wenyan4work/pvfmm.git
+	url = https://github.com/dmalhotra/pvfmm.git
 	ignore = dirty
 [submodule "Trilinos/Trilinos"]
 	path = Trilinos/Trilinos
