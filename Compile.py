@@ -39,6 +39,7 @@ else:
     exit()
 
 os.system('env | grep MKL')
+print("Enable: ", config['enable_packages'])
 
 install = config['install']
 check_eigen = False
@@ -47,8 +48,8 @@ make_jobs = multiprocessing.cpu_count()/2
 if config['make_jobs']:
     make_jobs = config['make_jobs']
 
-
-if input("Press Y to continue, else to quit...  ") != 'y':
+k = input("Press Y to continue, else to quit...  ")
+if k != 'y' and k != 'Y':
     exit()
 
 
@@ -59,7 +60,7 @@ os.system('date >'+log)
 os.system('date >'+err)
 
 # TRNG
-if config['trng']:
+if 'trng' in config['enable_packages']:
     os.chdir(cwd)
     os.chdir('TRNG')
     os.system('rm -rf ./build && mkdir ./build')
@@ -71,7 +72,7 @@ if config['trng']:
         os.system('make install')
 
 # YamlCpp
-if config['yamlcpp']:
+if 'yamlcpp' in config['enable_packages']:
     os.chdir(cwd)
     os.chdir('YamlCpp')
     os.system('rm -rf ./build && mkdir ./build')
@@ -82,7 +83,7 @@ if config['yamlcpp']:
         os.system('make install')
 
 # MsgPack
-if config['msgpack']:
+if 'msgpack' in config['enable_packages']:
     os.chdir(cwd)
     os.chdir('MsgPack')
     os.system('rm -rf ./build && mkdir ./build')
@@ -93,7 +94,7 @@ if config['msgpack']:
         os.system('make install')
 
 # Eigen
-if config['eigen']:
+if 'eigen' in config['enable_packages']:
     os.chdir(cwd)
     os.chdir('Eigen')
     os.system('rm -rf ./build && mkdir ./build')
@@ -107,7 +108,7 @@ if config['eigen']:
 
 
 # VTK
-if config['vtk']:
+if 'vtk' in config['enable_packages']:
     os.chdir(cwd)
     os.chdir('VTK')
     os.system('rm -rf ./build && mkdir ./build')
@@ -118,7 +119,7 @@ if config['vtk']:
         os.system('make install')
 
 # PVFMM
-if config['pvfmm']:
+if 'pvfmm' in config['enable_packages']:
     os.chdir(cwd)
     os.chdir('PVFMM')
     os.system('rm -rf ./build && mkdir ./build')
@@ -130,7 +131,7 @@ if config['pvfmm']:
         os.system('make install')
 
 # Trilinos
-if config['trilinos']:
+if 'trilinos' in config['enable_packages']:
     os.chdir(cwd)
     os.chdir('Trilinos')
     os.system('rm -rf ./build && mkdir ./build')

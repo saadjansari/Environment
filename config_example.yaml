@@ -1,13 +1,7 @@
 # copy this and rename to config.yaml
 
 # choose packages to enable
-trng: True
-eigen: True
-msgpack: True
-yamlcpp: True
-pvfmm: True
-vtk: True
-trilinos: True
+enable_packages: [trng, eigen, msgpack, yamlcpp, pvfmm, vtk, trilinos]
 
 install_destination: ~/env_intel
 
