@@ -5,6 +5,14 @@ enable_packages: [trng, eigen, msgpack, yamlcpp, pvfmm, vtk, trilinos]
 
 install_destination: ~/env_intel
 
+amd: true
+
+# amd epyc flags
+# cxxflags: -O3 -march=znver1 -DNDEBUG
+# cflags: -O3 -march=znver1 -DNDEBUG
+# openmp_cxx_flags: -fopenmp
+# openmp_c_flags: -fopenmp
+
 # gcc flags
 # cxxflags: -O3 -march=native -DNDEBUG
 # cflags: -O3 -march=native -DNDEBUG
