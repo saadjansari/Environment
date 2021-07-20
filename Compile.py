@@ -71,7 +71,7 @@ if openblas:
     os.chdir('OpenBLAS/OpenBLAS')
     # os.system('bash ../compile.sh >> '+log+'  2>>'+err)
     if install:
-        os.system('make install PREFIX=' +
+        os.system('bash ../install.sh ' +
                   os.environ["SFTPATH"]+' >> '+log+'  2>>'+err)
 
 # TRNG
