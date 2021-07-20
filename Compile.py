@@ -69,7 +69,7 @@ os.system('date >'+err)
 if openblas:
     os.chdir(cwd)
     os.chdir('OpenBLAS/OpenBLAS')
-    # os.system('bash ../compile.sh >> '+log+'  2>>'+err)
+    os.system('bash ../compile.sh >> '+log+'  2>>'+err)
     if install:
         os.system('bash ../install.sh ' +
                   os.environ["SFTPATH"]+' >> '+log+'  2>>'+err)
