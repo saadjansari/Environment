@@ -23,22 +23,29 @@ print(os.environ["CFLAGS"])
 print(os.environ["OPENMP_CXX_FLAGS"])
 print(os.environ["OPENMP_C_FLAGS"])
 
-if 'MKLROOT' in os.environ:
-    os.environ['MKL_INCLUDE_DIRS'] = os.environ['MKLROOT']+'/include'
-    os.environ['MKL_LIB_DIRS'] = os.environ['MKLROOT']+'/lib/intel64'
-elif config['mkl_root']:
-    os.environ['MKLROOT'] = config['mkl_root']
-    os.environ['MKL_INCLUDE_DIRS'] = os.environ['MKLROOT']+'/include'
-    os.environ['MKL_LIB_DIRS'] = os.environ['MKLROOT']+'/lib/intel64'
-elif config['mkl_include_dirs'] and config['mkl_lib_dirs']:
-    os.environ['MKL_INCLUDE_DIRS'] = config['mkl_include_dirs']
-    os.environ['MKL_LIB_DIRS'] = config['mkl_lib_dirs']
+if config['amd']:
+    # use openblas
+    openblas = True
+    print("Enable OpenBLAS")
 else:
-    msg = "must set either MKL_INCLUDE_DIRS/MKL_LIB_DIRS or MKLROOT in config.yaml\n"
-    print(msg)
-    exit()
+    # use mkl
+    print("Enable MKL")
+    if 'MKLROOT' in os.environ:
+        os.environ['MKL_INCLUDE_DIRS'] = os.environ['MKLROOT']+'/include'
+        os.environ['MKL_LIB_DIRS'] = os.environ['MKLROOT']+'/lib/intel64'
+    elif config['mkl_root']:
+        os.environ['MKLROOT'] = config['mkl_root']
+        os.environ['MKL_INCLUDE_DIRS'] = os.environ['MKLROOT']+'/include'
+        os.environ['MKL_LIB_DIRS'] = os.environ['MKLROOT']+'/lib/intel64'
+    elif config['mkl_include_dirs'] and config['mkl_lib_dirs']:
+        os.environ['MKL_INCLUDE_DIRS'] = config['mkl_include_dirs']
+        os.environ['MKL_LIB_DIRS'] = config['mkl_lib_dirs']
+    else:
+        msg = "must set either MKL_INCLUDE_DIRS/MKL_LIB_DIRS or MKLROOT in config.yaml\n"
+        print(msg)
+        exit()
+    os.system('env | grep MKL')
 
-os.system('env | grep MKL')
 print("Enable: ", config['enable_packages'])
 
 install = config['install']
@@ -59,6 +66,14 @@ err = cwd+'/compile.err'
 os.system('date >'+log)
 os.system('date >'+err)
 
+if openblas:
+    os.chdir(cwd)
+    os.chdir('OpenBLAS/OpenBLAS')
+    # os.system('bash ../compile.sh >> '+log+'  2>>'+err)
+    if install:
+        os.system('make install PREFIX=' +
+                  os.environ["SFTPATH"]+' >> '+log+'  2>>'+err)
+
 # TRNG
 if 'trng' in config['enable_packages']:
     os.chdir(cwd)
@@ -69,7 +84,7 @@ if 'trng' in config['enable_packages']:
               str(make_jobs)+' >> '+log+'  2>>'+err)
     os.system('./examples/time')
     if install:
-        os.system('make install')
+        os.system('make install'+' >> '+log+'  2>>'+err)
 
 # YamlCpp
 if 'yamlcpp' in config['enable_packages']:
@@ -80,7 +95,7 @@ if 'yamlcpp' in config['enable_packages']:
     os.system('bash ../do-configure-YamlCpp.sh && make -j' +
               str(make_jobs)+' >> '+log+'  2>>'+err)
     if install:
-        os.system('make install')
+        os.system('make install'+' >> '+log+'  2>>'+err)
 
 # MsgPack
 if 'msgpack' in config['enable_packages']:
@@ -91,7 +106,7 @@ if 'msgpack' in config['enable_packages']:
     os.system('bash ../do-configure-MsgPack.sh && make -j' +
               str(make_jobs)+' >> '+log+'  2>>'+err)
     if install:
-        os.system('make install')
+        os.system('make install'+' >> '+log+'  2>>'+err)
 
 # Eigen
 if 'eigen' in config['enable_packages']:
@@ -104,7 +119,7 @@ if 'eigen' in config['enable_packages']:
     if check_eigen:
         os.system('make check -j8')
     if install:
-        os.system('make install')
+        os.system('make install'+' >> '+log+'  2>>'+err)
 
 
 # VTK
@@ -116,7 +131,7 @@ if 'vtk' in config['enable_packages']:
     os.system('bash ../do-configure-VTK.sh && make -j' +
               str(make_jobs)+'  >> '+log+'  2>>'+err)
     if install:
-        os.system('make install')
+        os.system('make install'+' >> '+log+'  2>>'+err)
 
 # PVFMM
 if 'pvfmm' in config['enable_packages']:
@@ -124,11 +139,15 @@ if 'pvfmm' in config['enable_packages']:
     os.chdir('PVFMM')
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
-    os.system('bash ../do-configure-pvfmm.sh && make -j' +
+    if openblas:
+        script = 'do-configure-pvfmm-AMD.sh'
+    else:
+        script = 'do-configure-pvfmm.sh'
+    os.system('bash ../'+script+' && make -j' +
               str(make_jobs)+'  >> '+log+'  2>>'+err)
-    os.system('./examples/example1 -N 65536 -omp 4')
+    os.system('PVFMM_DIR=./ ./examples/example1 -N 65536 -omp 4')
     if install:
-        os.system('make install')
+        os.system('make install'+' >> '+log+'  2>>'+err)
 
 # Trilinos
 if 'trilinos' in config['enable_packages']:
@@ -136,10 +155,14 @@ if 'trilinos' in config['enable_packages']:
     os.chdir('Trilinos')
     os.system('rm -rf ./build && mkdir ./build')
     os.chdir('build')
-    os.system('bash ../do-configure-Trilinos.sh && make -j' +
+    if openblas:
+        script = 'do-configure-Trilinos-AMD.sh'
+    else:
+        script = 'do-configure-Trilinos.sh'
+    os.system('bash ../do-configure-Trilinos-AMD.sh && make -j' +
               str(make_jobs)+'  >> '+log+'  2>>'+err)
     if test_Trilinos:
         os.environ["OMP_NUM_THREADS"] = "3"
         os.system('make test')
     if install:
-        os.system('make install')
+        os.system('make install'+' >> '+log+'  2>>'+err)
