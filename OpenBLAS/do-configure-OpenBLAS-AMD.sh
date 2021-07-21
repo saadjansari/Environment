@@ -1,14 +1,11 @@
 #!/bin/bash
 
-SOURCE_PATH=../pvfmm
+SOURCE_PATH=../OpenBLAS
 
 # You can invoke this shell script with additional command-line
 # arguments.  They will be passed directly to CMake.
 #
 EXTRA_ARGS=$@
-
-# use aocl library
-export FFTWDIR=$AOCL_BASE/
 
 #
 # Each invocation of CMake caches the values of build options in a
@@ -26,18 +23,21 @@ rm -f CMakeCache.txt
 #
 cmake \
   -D CMAKE_INSTALL_PREFIX:FILEPATH="$SFTPATH" \
-  -D CMAKE_INSTALL_LIBDIR=lib \
+  -D CMAKE_INSTALL_LIBDIR="lib" \
   -D CMAKE_BUILD_TYPE:STRING="Release" \
-  -D CMAKE_CXX_COMPILER:STRING="mpicxx" \
-  -D CMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
-  -D PVFMM_EXTENDED_BC:BOOL=ON \
-  -D BLA_VENDOR="OpenBLAS" \
-  -D BLAS_LIBRARIES:FILEPATH="$OPENBLAS_BASE/lib/libopenblas.so" \
-  -D LAPACK_LIBRARIES:FILEPATH="$OPENBLAS_BASE/lib/libopenblas.so" \
-  -D FFTW_INCLUDE_DIRS:FILEPATH="$AOCL_BASE/amd-fftw/include" \
-  -D FFTW_DOUBLE_LIB="$AOCL_BASE/lib/libfftw3.so" \
-  -D FFTW_DOUBLE_OPENMP_LIB="$AOCL_BASE/lib/libfftw3_omp.so" \
-  -D FFTW_FLOAT_LIB="$AOCL_BASE/lib/libfftw3f.so" \
-  -D FFTW_FLOAT_OPENMP_LIB="$AOCL_BASE/lib/libfftw3f_omp.so" \
+  -D CMAKE_C_COMPILER:STRING="gcc" \
+  -D CMAKE_C_FLAGS:STRING="$CFLAGS" \
+  -D CMAKE_Fortran_COMPILER:STRING="gfortran" \
+  -D CMAKE_Fortran_FLAGS:STRING="$CFLAGS" \
+  -D BUILD_SHARED_LIBS=ON \
+  -D TARGET=ZEN \
+  -D DYNAMIC_ARCH=0 \
+  -D USE_THREAD=1 \
+  -D USE_OPENMP=1 \
+  -D BUILD_RELAPACK=0 \
+  -D NUM_THREADS=64 \
+  -D NUM_PARALLEL=16 \
+  -D CPP_THREAD_SAFETY_GEMV=ON \
+  -D CPP_THREAD_SAFETY_TEST=ON \
   $EXTRA_ARGS \
   $SOURCE_PATH

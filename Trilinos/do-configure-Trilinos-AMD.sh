@@ -50,7 +50,7 @@ cmake \
 	-D BUILD_SHARED_LIBS:BOOL=OFF \
     -D BLA_STATIC:BOOL=ON \
     -D BLA_VENDOR:STRING="OpenBLAS" \
-    -D TPL_BLAS_LIBRARIES:PATH="$SFTPATH/lib/libopenblas.so" \
-    -D TPL_LAPACK_LIBRARIES:PATH="$SFTPATH/lib/libopenblas.so" \
+    -D TPL_BLAS_LIBRARIES:PATH="$OPENBLAS_BASE/lib/libopenblas.so" \
+    -D TPL_LAPACK_LIBRARIES:PATH="$OPENBLAS_BASE/lib/libopenblas.so" \
     $EXTRA_ARGS \
     $TRILINOS_PATH

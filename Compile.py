@@ -67,12 +67,19 @@ os.system('date >'+log)
 os.system('date >'+err)
 
 if openblas:
-    os.chdir(cwd)
-    os.chdir('OpenBLAS/OpenBLAS')
-    os.system('bash ../compile.sh >> '+log+'  2>>'+err)
-    if install:
-        os.system('bash ../install.sh ' +
-                  os.environ["SFTPATH"]+' >> '+log+'  2>>'+err)
+    # current openblas cannot be built properly
+    # load from cluster module
+    print(os.environ['OPENBLAS_BASE'])
+    # os.chdir(cwd)
+    # os.chdir('OpenBLAS')
+    # os.system('rm -rf ./build && mkdir ./build')
+    # os.chdir('build')
+    # os.system('bash ../do-configure-OpenBLAS-AMD.sh && make -j' +
+    #           str(make_jobs)+' >> '+log+'  2>>'+err)
+    # if install:
+    #     os.system('bash ../install.sh ' +
+    #               os.environ["SFTPATH"]+' >> '+log+'  2>>'+err)
+    pass
 
 # TRNG
 if 'trng' in config['enable_packages']:
@@ -159,7 +166,7 @@ if 'trilinos' in config['enable_packages']:
         script = 'do-configure-Trilinos-AMD.sh'
     else:
         script = 'do-configure-Trilinos.sh'
-    os.system('bash ../do-configure-Trilinos-AMD.sh && make -j' +
+    os.system('bash ../'+script+' && make -j' +
               str(make_jobs)+'  >> '+log+'  2>>'+err)
     if test_Trilinos:
         os.environ["OMP_NUM_THREADS"] = "3"
