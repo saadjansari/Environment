@@ -23,6 +23,8 @@ print(os.environ["CFLAGS"])
 print(os.environ["OPENMP_CXX_FLAGS"])
 print(os.environ["OPENMP_C_FLAGS"])
 
+openblas = False
+
 if config['amd']:
     # use openblas
     openblas = True
