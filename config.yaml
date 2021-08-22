@@ -1,0 +1,34 @@
+# copy this and rename to config.yaml
+
+# choose packages to enable
+enable_packages: [trng, eigen, msgpack, yamlcpp, pvfmm, vtk, trilinos]
+
+install_destination: ~/local
+
+amd: false 
+
+# amd epyc flags
+# cxxflags: -O3 -march=znver1 -DNDEBUG
+# cflags: -O3 -march=znver1 -DNDEBUG
+# openmp_cxx_flags: -fopenmp
+# openmp_c_flags: -fopenmp
+
+# gcc flags
+ cxxflags: -O3 -march=native -DNDEBUG
+ cflags: -O3 -march=native -DNDEBUG
+ openmp_cxx_flags: -fopenmp
+ openmp_c_flags: -fopenmp
+
+# icc flags
+#cxxflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
+#cflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
+#openmp_cxx_flags: -qopenmp
+#openmp_c_flags: -qopenmp
+
+mkl_root: opt/intel/mkl
+mkl_include_dirs:
+mkl_lib_dirs:
+
+install: True
+test_Trilinos: True
+make_jobs: 4
