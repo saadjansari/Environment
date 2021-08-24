@@ -3,9 +3,9 @@
 # choose packages to enable
 enable_packages: [trng, eigen, msgpack, yamlcpp, pvfmm, vtk, trilinos]
 
-install_destination: ~/local
+install_destination: /usr/local
 
-amd: false 
+amd: false
 
 # amd epyc flags
 # cxxflags: -O3 -march=znver1 -DNDEBUG
