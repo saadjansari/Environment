@@ -14,10 +14,10 @@ amd: false
 # openmp_c_flags: -fopenmp
 
 # gcc flags
- cxxflags: -O3 -march=native -DNDEBUG
- cflags: -O3 -march=native -DNDEBUG
- openmp_cxx_flags: -fopenmp
- openmp_c_flags: -fopenmp
+cxxflags: -O3 -march=native -DNDEBUG
+cflags: -O3 -march=native -DNDEBUG
+openmp_cxx_flags: -fopenmp
+openmp_c_flags: -fopenmp
 
 # icc flags
 #cxxflags: -O3 -mavx2 -axCORE-AVX2,CORE-AVX512 -DNDEBUG -qno-offload
